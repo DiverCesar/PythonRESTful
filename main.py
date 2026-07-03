@@ -3,7 +3,11 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routes.appointments import router as appointments_router
 
-app = FastAPI(title="SER SALUD - Terapia Física API")
+app = FastAPI(
+    title="Clinic Management System API",
+    description="RESTful API para la gestión de citas y terapias",
+    version="1.0.0"
+)
 
 app.add_middleware(
     CORSMiddleware,
@@ -13,22 +17,19 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(appointments_router, prefix="/sersalud/appointments")
-
+# Aquí establecemos la ruta base que usted solicitó
+app.include_router(appointments_router, prefix="/api/appointments", tags=["Appointments"])
 
 @app.get("/")
-def root():
+def api_root():
     return {
-        "service": "SER SALUD - Terapia Física",
-        "status": "running",
-        "docs": "/docs"
+        "service": "Clinic Management API - Active",
+        "documentation": "/docs"
     }
 
-
-@app.get("/health")
-def health():
-    return {"status": "healthy"}
-
+@app.get("/health-check")
+def health_check():
+    return {"status": "ok"}
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=3000, reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=4000, reload=True)
