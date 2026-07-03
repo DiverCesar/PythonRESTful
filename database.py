@@ -4,8 +4,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-MONGO_URI = os.getenv("MONGO_URI", "mongodb+srv://lierazo_db_user:<password>@cluster0.vkglsoo.mongodb.net/")
-DB_NAME = os.getenv("DB_NAME", "sersalud")
+MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/")
+DB_NAME = os.getenv("DB_NAME", "clinic_management")
 
-client = AsyncIOMotorClient(MONGO_URI)
-db = client[DB_NAME]
+db_client = AsyncIOMotorClient(MONGO_URI)
+database = db_client[DB_NAME]
